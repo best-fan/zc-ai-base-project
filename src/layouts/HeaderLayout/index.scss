@@ -1,0 +1,10 @@
+.header-layout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 56px; // Header 高度
+
+  &__main {
+    height: calc(100vh - 56px);
+  }
+}

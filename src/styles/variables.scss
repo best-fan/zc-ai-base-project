@@ -1,0 +1,114 @@
+/**
+ * 样式变量
+ */
+
+/** 主题色 */
+$primary-color: #165dff;
+$success-color: #00b42a;
+$warning-color: #ff7d00;
+$danger-color: #f53f3f;
+$info-color: #86909c;
+
+/** 文字颜色 */
+$text-color-primary: #1d2129;
+$text-color-secondary: #4e5969;
+$text-color-disabled: #c9cdd4;
+$text-color-placeholder: #a9aeb8;
+
+/** 背景颜色 */
+$bg-color: #f5f7fa;
+$bg-color-secondary: #ffffff;
+
+/** 边框颜色 */
+$border-color: #e5e6eb;
+
+/** 字体大小 */
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-base: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 20px;
+$font-size-xxl: 24px;
+
+/** 间距 */
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 12px;
+$spacing-lg: 16px;
+$spacing-xl: 24px;
+$spacing-xxl: 32px;
+
+/** 圆角 */
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+
+/** 阴影 */
+$box-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$box-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$box-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+/** 断点 */
+$breakpoint-xs: 480px;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$breakpoint-xxl: 1600px;
+
+/** 侧边栏宽度 */
+$sidebar-width: 220px;
+$sidebar-collapsed-width: 48px;
+
+/** 头部高度 */
+$header-height: 60px;
+
+/** ==================== 首页工作台变量 ==================== */
+
+/** 文本颜色 */
+$home-text-primary: #1b2129;
+$home-text-secondary: #626c78;
+$home-text-tertiary: #8a939e;
+$home-text-hint: #8b949e;
+
+/** 功能卡片主题色 */
+$card-theme-delivery: #1996e0;
+$card-theme-project-manager: #4073e6;
+$card-theme-business-dept: #139eb1;
+$card-theme-business-manager: #e64b6f;
+
+/** 功能色 */
+$color-page-bg: #f1f4f6;
+$color-white: #ffffff;
+
+/** AI 文字渐变 */
+$logo-ai-gradient: linear-gradient(180deg, #232aee 11%, #7db8ff 100%);
+
+/** 字体大小 */
+$font-size-xxl: 24px;
+$font-size-hero: 46px;
+
+/** 字重 */
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+/** 圆角 */
+$radius-card: 16px;
+$radius-button: 6px;
+
+/** 首页间距 */
+$spacing-page-horizontal: 240px;
+$spacing-card-gap: 21px;
+$spacing-card-padding-x: 40px;
+$spacing-card-button-bottom: 40px;
+$spacing-header-padding: 40px;
+
+/** 卡片尺寸 */
+$card-width: 344px;
+$card-height: 396px;
+$card-button-width: 264px;
+$card-button-height: 50px;
+
+/** 首页头部高度 */
+$home-header-height: 56px;

@@ -1,0 +1,19 @@
+.page-title {
+  text-align: center;
+  margin-bottom: 109px;
+
+  &__text {
+    font-size: 46.04px;
+    font-weight: bold;
+    line-height: 72.35px;
+    color: #1b2129;
+    margin: 0;
+    font-family: 'Source Han Sans CN', '思源黑体', sans-serif;
+  }
+
+  img {
+    width: 55px;
+    height: 43px;
+    margin: 0 5px;
+  }
+}

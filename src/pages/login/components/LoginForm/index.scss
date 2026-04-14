@@ -1,0 +1,40 @@
+.login-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 42px 0;
+  width: 365px;
+  height: 95%;
+  min-height: 430px;
+  border-radius: 10px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.login-form-welcome {
+  font-size: 20px;
+  line-height: 28px;
+  color: #17263d;
+}
+
+.login-form-sub-title {
+  font-size: 12px;
+  line-height: 20px;
+  color: #17263d;
+  margin-bottom: 28px;
+}
+
+.login-form-title {
+  font-size: 26px;
+  line-height: 26px;
+  color: #17263d;
+  letter-spacing: 0.038em;
+  font-weight: 500;
+  margin-bottom: 32px;
+}
+
+.login-form-remember {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}

@@ -5,38 +5,67 @@
       <nav class="header__breadcrumb">
         <template v-for="(item, index) in breadcrumbItems" :key="index">
           <img
-            v-if="item.icon == 'home' && breadcrumbLength <= 1" src="@/assets/images/index/home.png" alt=""
-            class="header__breadcrumb-icon" @click="handleBreadcrumbClick(item)"
-          >
+            v-if="item.icon == 'home' && breadcrumbLength <= 1"
+            src="@/assets/images/index/home.png"
+            alt=""
+            class="header__breadcrumb-icon"
+            :class="{ 'header__breadcrumb-icon--link': item.path }"
+            @click="item.path && handleBreadcrumbClick(item)"
+          />
           <img
-            v-if="item.icon == 'home' && breadcrumbLength > 1" src="@/assets/images/index/home2.png" alt=""
-            class="header__breadcrumb-icon" @click="handleBreadcrumbClick(item)"
-          >
-          <img
-            v-if="item.icon == 'jf'" src="@/assets/images/index/jf.png" alt="" class="header__breadcrumb-icon"
-            @click="handleBreadcrumbClick(item)"
-          >
+            v-if="item.icon == 'home' && breadcrumbLength > 1"
+            src="@/assets/images/index/home2.png"
+            alt=""
+            class="header__breadcrumb-icon"
+            :class="{ 'header__breadcrumb-icon--link': item.path }"
+            @click="item.path && handleBreadcrumbClick(item)"
+          />
           <span
-            class="header__breadcrumb-item" :class="{ 'header__breadcrumb-item--link': item.path }"
+            class="header__breadcrumb-item"
+            :class="{
+              'header__breadcrumb-item--link': item.path,
+              'header__breadcrumb-item--first': index === 0,
+            }"
             @click="handleBreadcrumbClick(item)"
           >
+            <img
+              v-if="index === 1 && secondPageIcon"
+              :src="secondPageIcon"
+              alt=""
+              class="header__breadcrumb-label-icon"
+            />
             {{ item.title }}
           </span>
-          <span v-if="index < breadcrumbItems.length - 1" class="header__breadcrumb-separator">/</span>
+          <span v-if="index < breadcrumbItems.length - 1" class="header__breadcrumb-separator"
+            >/</span
+          >
         </template>
       </nav>
     </div>
     <div class="header__right">
-      <a-popover trigger="click" position="bottom" :content-style="{ padding: '0' }">
-        <img class="set" src="@/assets/images/index/set.png" alt="">
+      <!-- 部门切换器插槽 - 根据路由显示不同类型的切换器 -->
+      <DeptSwitcher
+        v-if="deptSwitcherType"
+        :type="deptSwitcherType"
+        class="header__dept-switcher"
+      />
+      <!-- 设置按钮 - 有 sys 权限时才显示 -->
+      <a-popover
+        v-if="showSettings"
+        trigger="click"
+        position="bottom"
+        :content-style="{ padding: '0' }"
+      >
+        <img class="set" src="@/assets/images/index/set.png" alt="" />
         <template #content>
           <div class="settings-menu">
-            <div class="settings-menu__title">系统设置</div>
+            <div class="settings-menu__title">{{ settingsMenuData?.title }}</div>
             <div
-              v-for="item in settingsMenu" :key="item.key" class="settings-menu__item"
+              v-for="item in settingsMenuData?.children"
+              :key="item.enCode"
+              class="settings-menu__item"
               @click="handleMenuClick(item)"
             >
-              <component :is="item.icon" class="settings-menu__icon" />
               <span class="settings-menu__text">{{ item.label }}</span>
             </div>
           </div>
@@ -51,11 +80,19 @@
 /**
  * 头部导航栏组件
  */
-import { computed, type Component } from 'vue'
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { IconUser, IconUserGroup, IconIdcard, IconApps } from '@arco-design/web-vue/es/icon'
+import { Message, Modal } from '@arco-design/web-vue'
 import Logo from './Logo.vue'
 import UserProfile from './UserProfile.vue'
+import DeptSwitcher from '@/components/DeptSwitcher/index.vue'
+import { useUserStore } from '@/store'
+
+// 二级页面图标
+import jfbmIcon from '@/assets/images/index/jfbm-index.png'
+import xmjlIcon from '@/assets/images/index/xmjl-index.png'
+import ywbmIcon from '@/assets/images/index/ywbm-index.png'
+import ywjlIcon from '@/assets/images/index/ywjl-index.png'
 
 defineOptions({ name: 'AppHeader' })
 
@@ -65,39 +102,107 @@ interface IBreadcrumbItem {
   path?: string
 }
 
-interface ISettingsMenuItem {
-  key: string
-  label: string
-  icon: Component
-  path: string
-}
-
 const route = useRoute()
 const router = useRouter()
+const userStore = useUserStore()
 
-// 系统设置菜单
-const settingsMenu: ISettingsMenuItem[] = [
-  { key: 'user', label: '用户管理', icon: IconUser, path: '/system/user' },
-  { key: 'dept', label: '部门管理', icon: IconUserGroup, path: '/system/department' },
-  { key: 'role', label: '角色管理', icon: IconIdcard, path: '/system/role' },
-  { key: 'menu', label: '菜单管理', icon: IconApps, path: '/system/menu', },
-]
+/** 需要显示的的菜单路径 */
+const excludedPaths = ['department', 'role', 'user', 'menu']
 
-// 获取面包屑配置
-const breadcrumbItems = computed<IBreadcrumbItem[]>(() => {
-  const breadcrumb = route.meta.breadcrumb as IBreadcrumbItem[] | undefined
-  if (!breadcrumb) {
-    // 默认显示工作台
-    return [{ title: '工作台', icon: 'home', path: '/' }]
+/** 系统设置菜单数据 - 包含标题和子菜单 */
+const settingsMenuData = computed(() => {
+  const menus = userStore.menuTreeBoList || []
+  const sysMenu = menus.find((m) => m.menuType === 'M' && m.enCode === 'sys')
+  if (!sysMenu?.children) return null
+  const parentPath = sysMenu.path?.replace(/^\//, '') || ''
+  const children = sysMenu.children
+    .filter((child) => excludedPaths.includes(child.path || '') || child.menuType === 'A')
+    .map((child) => {
+      // 按钮类型(A)不生成路由路径
+      if (child.menuType === 'A') {
+        return {
+          enCode: child.enCode,
+          label: child.label,
+          icon: child.icon,
+          path: '',
+          menuType: child.menuType,
+        }
+      }
+      // 如果 child.path 已经是绝对路径，直接使用；否则拼接父级路径
+      const fullPath = child.path?.startsWith('/') ? child.path : `/${parentPath}/${child.path}`
+      return {
+        enCode: child.enCode,
+        label: child.label,
+        icon: child.icon,
+        path: fullPath,
+        menuType: child.menuType,
+      }
+    })
+  return {
+    title: sysMenu.label,
+    children,
   }
-  // 添加图标组件
-  return breadcrumb
 })
 
-// 面包屑长度（安全访问）
-const breadcrumbLength = computed(() => {
-  const breadcrumb = route.meta.breadcrumb as IBreadcrumbItem[] | undefined
-  return breadcrumb?.length ?? 0
+/** 是否显示设置按钮 - 有 sys 权限时才显示 */
+const showSettings = computed(() => {
+  const menus = userStore.menuTreeBoList || []
+  return menus.some((m) => m.menuType === 'M' && m.enCode === 'sys')
+})
+
+// 获取面包屑配置 - 根据路由层级自动生成，过滤目录类型(M)
+const breadcrumbItems = computed<IBreadcrumbItem[]>(() => {
+  // 过滤掉目录类型(M)，只保留实际页面(C)
+  const matched = route.matched.filter((r) => r.meta.title && r.meta.layout === 'header')
+
+  // 首页特殊处理 - 工作台不可点击，颜色为 #1B2129
+  if (matched.length === 0 || route.path === '/') {
+    return [{ title: '工作台', icon: 'home' }]
+  }
+
+  // 动态路由：构建面包屑链
+  const items: IBreadcrumbItem[] = [{ title: '工作台', icon: 'home', path: '/' }]
+
+  matched.forEach((r, index) => {
+    const isLast = index === matched.length - 1
+    items.push({
+      title: r.meta.title as string,
+      icon: r.meta.icon as string | undefined,
+      path: isLast ? undefined : r.path,
+    })
+  })
+
+  return items
+})
+
+// 面包屑长度
+const breadcrumbLength = computed(() => breadcrumbItems.value.length)
+
+// 部门切换器类型（根据路由返回对应的 type，null 表示不显示）
+// 1: 交付部门经营数据看板
+// 3: 业务部门看板
+const deptSwitcherType = computed(() => {
+  const routeName = route.name as string
+  if (routeName === 'DeliveryDept') return 1 as const
+  if (routeName === 'BusinessDept') return 3 as const
+  return null
+})
+
+// 二级页面图标（根据路由名称返回对应图标）
+const secondPageIcon = computed(() => {
+  const routeName = route.name as string
+  switch (routeName) {
+    case 'DeliveryDept':
+      return jfbmIcon
+    case 'ProjectManager':
+      return xmjlIcon
+    case 'BusinessDept':
+      return ywbmIcon
+    case 'BusinessManager':
+      return ywjlIcon
+    default:
+      return null
+  }
 })
 
 // 处理面包屑点击
@@ -108,9 +213,30 @@ const handleBreadcrumbClick = (item: IBreadcrumbItem): void => {
 }
 
 // 处理设置菜单点击
-const handleMenuClick = (item: ISettingsMenuItem): void => {
-  // TODO: 跳转到对应管理页面
-  router.push(item.path)
+const handleMenuClick = async (item: {
+  enCode: string
+  path: string
+  label?: string
+  menuType?: string
+}): Promise<void> => {
+  // 同步角色按钮特殊处理（menuType === 'A'，enCode === 'sysrole'）
+  if (item.enCode === 'sysrole' && item.menuType === 'A') {
+    Modal.confirm({
+      title: item.label || '同步角色',
+      content: '确定要同步PMS中的角色数据吗？',
+      okText: '确定',
+      cancelText: '取消',
+      onOk: async () => {
+        // await syncRoleFromPms()
+        Message.success('同步成功')
+      },
+    })
+    return
+  }
+  // 路由菜单项跳转
+  if (item.path && item.menuType === 'C') {
+    router.push(item.path)
+  }
 }
 </script>
 

@@ -3,7 +3,7 @@
  */
 
 /** 应用标题 */
-export const APP_TITLE = 'KPI 数据平台'
+export const APP_TITLE = '通用基础工程项目'
 
 /** API 基础地址 */
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'

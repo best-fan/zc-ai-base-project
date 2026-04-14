@@ -1,4 +1,4 @@
-# zc-kpi-frontend
+# 通用基础工程项目
 
 前端项目（PC 桌面端）
 
@@ -98,7 +98,7 @@ src/
 | 变量名 | 说明 | 示例 |
 |--------|------|------|
 | VITE_API_BASE_URL | API 基础地址 | /api |
-| VITE_APP_TITLE | 应用标题 | KPI 数据平台 |
+| VITE_APP_TITLE | 应用标题 | 通用基础工程项目 |
 | VITE_ENV | 环境标识 | development / production |
 
 本地开发可创建 `.env.local` 覆盖配置。

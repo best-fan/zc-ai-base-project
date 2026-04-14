@@ -1,6 +1,6 @@
 <template>
   <div class="page-title">
-    <h1 class="page-title__text">众诚<img src="@/assets/images/index/ai.png" alt="logo">经营助手</h1>
+    <h1 class="page-title__text">通用基础工程项目</h1>
   </div>
 </template>
 

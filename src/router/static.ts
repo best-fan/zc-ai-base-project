@@ -7,7 +7,7 @@ export const staticRoutes: RouteRecordRaw[] = [
     name: 'Home',
     component: () => import('@/pages/home/index.vue'),
     meta: {
-      title: '众诚经营助手 - 工作台',
+      title: '通用基础工程项目 - 工作台',
       layout: 'header',
       requiresAuth: true,
       breadcrumb: [{ title: '工作台', icon: 'home' }],

@@ -1,9 +1,7 @@
 <template>
   <span class="header-logo">
     <img class="logo" src="@/assets/images/index/logo.png" alt="">
-    <span class="header-logo__text">众诚</span>
-    <img class="ai" src="@/assets/images/index/ai.png" alt="">
-    <span class="header-logo__text">经营助手</span>
+    <span class="header-logo__text">基础工程</span>
     <div class="line" />
   </span>
 </template>

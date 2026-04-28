@@ -50,10 +50,10 @@
       </a-form-item>
 
       <div class="login-form-remember">
-        <a-checkbox @change="setRememberPassword as any">
+        <a-checkbox :model-value="form.login.rememberMe === '1'" @change="setRememberPassword">
           {{ form.login.rememberPassword }}
         </a-checkbox>
-        <a-link v-if="false">{{ form.login.forgetPassword }}</a-link> 
+        <a-link v-if="false">{{ form.login.forgetPassword }}</a-link>
       </div>
 
       <a-button type="primary" html-type="submit" long :loading="loading" size="large">
@@ -72,8 +72,8 @@ import { IconUser, IconLock } from '@arco-design/web-vue/es/icon'
 import { useLoading } from '@/composables'
 import { useUserStore } from '@/store'
 import { md5 } from '@/utils/crypto'
+import { Verify } from '@/components'
 import type { ILoginReqData } from '@/types'
-import Verify from '@/components/verify/verify.vue'
 
 defineOptions({ name: 'LoginForm' })
 
@@ -104,7 +104,6 @@ const userInfo = reactive({
 })
 
 const router = useRouter()
-const errorMessage = ref('')
 const userStore = useUserStore()
 const verifyRef = ref<InstanceType<typeof Verify>>()
 
@@ -144,8 +143,7 @@ const handleLogin = async (captchaVerification: string): Promise<void> => {
     router.push(redirect ? decodeURIComponent(redirect as string) : { name: 'Home' })
     Message.success(form.login.loginSuccessMsg)
   } catch (err) {
-    console.error('登录失败:', err)
-    errorMessage.value = (err as Error).message
+    Message.error((err as Error).message || '登录失败')
   } finally {
     setLoading(false)
   }

@@ -74,7 +74,6 @@ const handleLogout = async (): Promise<void> => {
   &__info {
     display: flex;
     flex-direction: column;
-    text-align: left;
     margin-left: 8px;
   }
 
@@ -96,7 +95,6 @@ const handleLogout = async (): Promise<void> => {
     font-size: 12px;
     color: #86909c;
     margin-left: 4px;
-    margin-top: -15px;
   }
 }
 </style>

@@ -2,11 +2,7 @@
  * 加载状态组合式函数
  */
 import { ref } from 'vue'
-
-/** 加载状态配置选项 */
-interface IUseLoadingOptions {
-  initialState?: boolean
-}
+import type { IUseLoadingOptions } from '@/types'
 
 export function useLoading(options: IUseLoadingOptions = {}) {
   const { initialState = false } = options

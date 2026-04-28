@@ -2,12 +2,7 @@
  * 分页组合式函数
  */
 import { ref, computed } from 'vue'
-
-/** 分页配置选项 */
-interface IUsePaginationOptions {
-  pageSize?: number
-  total?: number
-}
+import type { IUsePaginationOptions } from '@/types'
 
 export function usePagination(options: IUsePaginationOptions = {}) {
   const { pageSize = 10, total = 0 } = options

@@ -11,7 +11,7 @@
             class="header__breadcrumb-icon"
             :class="{ 'header__breadcrumb-icon--link': item.path }"
             @click="item.path && handleBreadcrumbClick(item)"
-          />
+          >
           <img
             v-if="item.icon == 'home' && breadcrumbLength > 1"
             src="@/assets/images/index/home2.png"
@@ -19,7 +19,7 @@
             class="header__breadcrumb-icon"
             :class="{ 'header__breadcrumb-icon--link': item.path }"
             @click="item.path && handleBreadcrumbClick(item)"
-          />
+          >
           <span
             class="header__breadcrumb-item"
             :class="{
@@ -28,27 +28,15 @@
             }"
             @click="handleBreadcrumbClick(item)"
           >
-            <img
-              v-if="index === 1 && secondPageIcon"
-              :src="secondPageIcon"
-              alt=""
-              class="header__breadcrumb-label-icon"
-            />
             {{ item.title }}
           </span>
-          <span v-if="index < breadcrumbItems.length - 1" class="header__breadcrumb-separator"
-            >/</span
-          >
+          <span v-if="index < breadcrumbItems.length - 1" class="header__breadcrumb-separator">
+            /
+          </span>
         </template>
       </nav>
     </div>
     <div class="header__right">
-      <!-- 部门切换器插槽 - 根据路由显示不同类型的切换器 -->
-      <DeptSwitcher
-        v-if="deptSwitcherType"
-        :type="deptSwitcherType"
-        class="header__dept-switcher"
-      />
       <!-- 设置按钮 - 有 sys 权限时才显示 -->
       <a-popover
         v-if="showSettings"
@@ -85,14 +73,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { Message, Modal } from '@arco-design/web-vue'
 import Logo from './Logo.vue'
 import UserProfile from './UserProfile.vue'
-import DeptSwitcher from '@/components/DeptSwitcher/index.vue'
 import { useUserStore } from '@/store'
-
-// 二级页面图标
-import jfbmIcon from '@/assets/images/index/jfbm-index.png'
-import xmjlIcon from '@/assets/images/index/xmjl-index.png'
-import ywbmIcon from '@/assets/images/index/ywbm-index.png'
-import ywjlIcon from '@/assets/images/index/ywjl-index.png'
 
 defineOptions({ name: 'AppHeader' })
 
@@ -177,33 +158,6 @@ const breadcrumbItems = computed<IBreadcrumbItem[]>(() => {
 
 // 面包屑长度
 const breadcrumbLength = computed(() => breadcrumbItems.value.length)
-
-// 部门切换器类型（根据路由返回对应的 type，null 表示不显示）
-// 1: 交付部门经营数据看板
-// 3: 业务部门看板
-const deptSwitcherType = computed(() => {
-  const routeName = route.name as string
-  if (routeName === 'DeliveryDept') return 1 as const
-  if (routeName === 'BusinessDept') return 3 as const
-  return null
-})
-
-// 二级页面图标（根据路由名称返回对应图标）
-const secondPageIcon = computed(() => {
-  const routeName = route.name as string
-  switch (routeName) {
-    case 'DeliveryDept':
-      return jfbmIcon
-    case 'ProjectManager':
-      return xmjlIcon
-    case 'BusinessDept':
-      return ywbmIcon
-    case 'BusinessManager':
-      return ywjlIcon
-    default:
-      return null
-  }
-})
 
 // 处理面包屑点击
 const handleBreadcrumbClick = (item: IBreadcrumbItem): void => {

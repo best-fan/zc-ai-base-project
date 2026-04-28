@@ -6,7 +6,6 @@
         <FeatureCard v-for="card in featureCards" :key="card.id" v-bind="card" />
       </div>
     </main>
-    <img class="bg" src="@/assets/images/index/bg.gif" alt="">
   </div>
 </template>
 
@@ -16,7 +15,7 @@
  */
 import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/store'
-import FeatureCard from '@/components/FeatureCard/index.vue'
+import { FeatureCard } from '@/components'
 import PageTitle from './components/PageTitle/index.vue'
 import type { IFeatureCard } from '@/types'
 
@@ -24,7 +23,6 @@ defineOptions({ name: 'HomePage' })
 
 const userStore = useUserStore()
 
-// 功能卡片配置 - 系统管理入口
 const featureCards = ref<IFeatureCard[]>([
   {
     id: 'menu',
@@ -61,7 +59,7 @@ const featureCards = ref<IFeatureCard[]>([
     gradientBg: 'linear-gradient(180deg, rgba(255, 221, 229, 0.7) 0%, rgba(255, 255, 255, 0.5) 77%)',
     path: '/system/user',
     icon: []
-  },
+  }
 ])
 
 onMounted(() => {

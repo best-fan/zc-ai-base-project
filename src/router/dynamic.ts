@@ -1,7 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
 import type { IMenu } from '@/types'
 import { getRouterInstance } from './instance'
-import EmptyLayout from '@/layouts/EmptyLayout/index.vue'
 
 /** 动态路由标记 */
 let dynamicRoutesAdded = false
@@ -43,10 +42,11 @@ const transformMenusToRoutes = (menus: IMenu[]): RouteRecordRaw[] => {
       return {
         path: currentPath,
         name: menu.enCode,
-        component: EmptyLayout,
+        component: () => import('@/layouts/EmptyLayout/index.vue'),
         meta: {
           title: menu.label,
           icon: menu.icon,
+          layout: 'empty',
           requiresAuth: true,
         },
         children: childRoutes,
@@ -64,7 +64,7 @@ const transformMenusToRoutes = (menus: IMenu[]): RouteRecordRaw[] => {
       // 查找匹配的组件
       const matchedModule = Object.keys(pageModules).find((key) => key === componentPath)
       if (!matchedModule) {
-        console.warn(`页面组件不存在: ${componentPath}`)
+        // 页面组件不存在，静默跳过
         return null
       }
 
@@ -112,9 +112,9 @@ export const addDynamicRoutes = (menus: IMenu[]): void => {
   routes.forEach((route) => {
     try {
       router.addRoute(route)
-    } catch (error) {}
-
-    
+    } catch {
+      // 路由添加失败时静默处理
+    }
   })
 
   // 移除之前的 404 路由，重新添加到末尾
@@ -129,9 +129,9 @@ export const addDynamicRoutes = (menus: IMenu[]): void => {
         layout: 'empty',
       },
     })
-  } catch (error) {}
-
-  dynamicRoutesAdded = true
+  } catch {
+    // 404 路由重置失败时静默处理
+  }
 }
 
 /**

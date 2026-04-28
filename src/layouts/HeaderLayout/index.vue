@@ -11,7 +11,7 @@
 /**
  * 带全局 Header 的布局组件
  */
-import AppHeader from '@/components/Header/index.vue'
+import { AppHeader } from '@/components'
 
 defineOptions({ name: 'HeaderLayout' })
 </script>

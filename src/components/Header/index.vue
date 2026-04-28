@@ -74,14 +74,9 @@ import { Message, Modal } from '@arco-design/web-vue'
 import Logo from './Logo.vue'
 import UserProfile from './UserProfile.vue'
 import { useUserStore } from '@/store'
+import type { IBreadcrumbItem } from '@/types'
 
 defineOptions({ name: 'AppHeader' })
-
-interface IBreadcrumbItem {
-  title: string
-  icon?: string
-  path?: string
-}
 
 const route = useRoute()
 const router = useRouter()

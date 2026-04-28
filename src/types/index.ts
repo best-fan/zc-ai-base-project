@@ -13,3 +13,6 @@ export * from './models/card'
 
 // Composables 类型
 export * from './composables'
+
+// 组件类型
+export * from './components'

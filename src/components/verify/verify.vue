@@ -35,6 +35,8 @@ import {
 } from 'vue'
 import VerifySlide from './verify-slide.vue'
 
+defineOptions({ name: 'Verify' })
+
 const emit = defineEmits(['stopLoading', 'verifySuccess'])
 
 const props = defineProps({
@@ -93,7 +95,7 @@ const props = defineProps({
 })
 
 const verifyType = ref('')
-let componentType: Component | null = null
+const componentType = ref<Component | null>(null)
 const showVerifyBox = ref(false)
 const { proxy } = getCurrentInstance() as ComponentInternalInstance
 
@@ -170,7 +172,7 @@ watch(
       //   break;
       default:
         verifyType.value = '2'
-        componentType = VerifySlide
+        componentType.value = VerifySlide
         break
     }
   },
@@ -178,7 +180,7 @@ watch(
 )
 </script>
 
-<style>
+<style scoped lang="scss">
 .verifybox {
   position: absolute;
   box-sizing: border-box;

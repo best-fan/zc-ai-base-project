@@ -120,5 +120,5 @@ export const codeChars = [
   'Y',
   'Z',
 ]
-export const codeColor1 = ['#fffff0', '#f0ffff', '#f0fff0', '#fff0f0']
-export const codeColor2 = ['#FF0033', '#006699', '#993366', '#FF9900', '#66CC66', '#FF33CC']
+export const CODE_COLOR_1 = ['#fffff0', '#f0ffff', '#f0fff0', '#fff0f0']
+export const CODE_COLOR_2 = ['#FF0033', '#006699', '#993366', '#FF9900', '#66CC66', '#FF33CC']

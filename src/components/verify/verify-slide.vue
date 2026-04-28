@@ -102,6 +102,8 @@ import type {
 import defaultImg from '@/assets/images/captcha-default.jpg'
 import { resetSize, type IVerifyComponent } from './reset-size'
 
+defineOptions({ name: 'VerifySlide' })
+
 const props = defineProps({
   type: {
     type: String,
@@ -405,10 +407,4 @@ const refresh = () => {
 }
 
 defineExpose({ init, refresh })
-</script>
-
-<script lang="ts">
-export default {
-  name: 'VerifySlide',
-}
 </script>

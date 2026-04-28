@@ -5,56 +5,56 @@ export interface IVerifyComponent {
 }
 
 export function resetSize(vm: IVerifyComponent): {
-  imgWidth: number;
-  imgHeight: number;
-  barWidth: number;
-  barHeight: number;
+  imgWidth: number
+  imgHeight: number
+  barWidth: number
+  barHeight: number
 } {
   // 图片的宽度、高度，移动条的宽度、高度
-  let imgWidth;
-  let imgHeight;
-  let barWidth;
-  let barHeight;
+  let imgWidth
+  let imgHeight
+  let barWidth
+  let barHeight
 
-  const parentNode = vm.$el.parentNode as HTMLElement | null;
-  const parentWidth = parentNode?.offsetWidth || document.body.offsetWidth;
-  const parentHeight = parentNode?.offsetHeight || document.body.offsetHeight;
+  const parentNode = vm.$el.parentNode as HTMLElement | null
+  const parentWidth = parentNode?.offsetWidth || document.body.offsetWidth
+  const parentHeight = parentNode?.offsetHeight || document.body.offsetHeight
 
   if (vm.imgSize.width.indexOf('%') !== -1) {
-    imgWidth = `${(parseInt(vm.imgSize.width, 10) / 100) * parentWidth}px`;
+    imgWidth = `${(parseInt(vm.imgSize.width, 10) / 100) * parentWidth}px`
   } else {
-    imgWidth = vm.imgSize.width;
+    imgWidth = vm.imgSize.width
   }
 
   if (vm.imgSize.height.indexOf('%') !== -1) {
-    imgHeight = `${(parseInt(vm.imgSize.height, 10) / 100) * parentHeight}px`;
+    imgHeight = `${(parseInt(vm.imgSize.height, 10) / 100) * parentHeight}px`
   } else {
-    imgHeight = vm.imgSize.height;
+    imgHeight = vm.imgSize.height
   }
 
   if (vm.barSize.width.indexOf('%') !== -1) {
-    barWidth = `${(parseInt(vm.barSize.width, 10) / 100) * parentWidth}px`;
+    barWidth = `${(parseInt(vm.barSize.width, 10) / 100) * parentWidth}px`
   } else {
-    barWidth = vm.barSize.width;
+    barWidth = vm.barSize.width
   }
 
   if (vm.barSize.height.indexOf('%') !== -1) {
-    barHeight = `${(parseInt(vm.barSize.height, 10) / 100) * parentHeight}px`;
+    barHeight = `${(parseInt(vm.barSize.height, 10) / 100) * parentHeight}px`
   } else {
-    barHeight = vm.barSize.height;
+    barHeight = vm.barSize.height
   }
 
-  imgWidth = parseInt(imgWidth, 10);
-  imgHeight = parseInt(imgHeight, 10);
-  barWidth = parseInt(barWidth, 10);
-  barHeight = parseInt(barHeight, 10);
+  imgWidth = parseInt(imgWidth, 10)
+  imgHeight = parseInt(imgHeight, 10)
+  barWidth = parseInt(barWidth, 10)
+  barHeight = parseInt(barHeight, 10)
 
   return {
     imgWidth,
     imgHeight,
     barWidth,
     barHeight,
-  };
+  }
 }
 
 export const codeChars = [
@@ -119,6 +119,6 @@ export const codeChars = [
   'X',
   'Y',
   'Z',
-];
-export const codeColor1 = ['#fffff0', '#f0ffff', '#f0fff0', '#fff0f0'];
-export const codeColor2 = ['#FF0033', '#006699', '#993366', '#FF9900', '#66CC66', '#FF33CC'];
+]
+export const codeColor1 = ['#fffff0', '#f0ffff', '#f0fff0', '#fff0f0']
+export const codeColor2 = ['#FF0033', '#006699', '#993366', '#FF9900', '#66CC66', '#FF33CC']

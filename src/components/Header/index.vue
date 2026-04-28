@@ -44,7 +44,7 @@
         position="bottom"
         :content-style="{ padding: '0' }"
       >
-        <img class="set" src="@/assets/images/index/set.png" alt="" />
+        <img class="set" src="@/assets/images/index/set.png" alt="">
         <template #content>
           <div class="settings-menu">
             <div class="settings-menu__title">{{ settingsMenuData?.title }}</div>

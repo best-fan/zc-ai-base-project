@@ -25,22 +25,29 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, getCurrentInstance, watch, type ComponentInternalInstance, type Component } from 'vue';
-import VerifySlide from './verify-slide.vue';
+import {
+  ref,
+  onMounted,
+  getCurrentInstance,
+  watch,
+  type ComponentInternalInstance,
+  type Component,
+} from 'vue'
+import VerifySlide from './verify-slide.vue'
 
-const emit = defineEmits(['stopLoading', 'verifySuccess']);
+const emit = defineEmits(['stopLoading', 'verifySuccess'])
 
 const props = defineProps({
   locale: {
     require: false,
     type: String,
     default() {
-      let language = 'zh-CN';
+      let language = 'zh-CN'
       // 默认语言不输入为浏览器语言
       if (navigator.language) {
-        language = navigator.language;
+        language = navigator.language
       }
-      return language;
+      return language
     },
   },
   // 验证码类型
@@ -62,7 +69,7 @@ const props = defineProps({
       return {
         width: '310px',
         height: '155px',
-      };
+      }
     },
   },
   blockSize: {
@@ -71,7 +78,7 @@ const props = defineProps({
       return {
         width: '50px',
         height: '50px',
-      };
+      }
     },
   },
   barSize: {
@@ -80,76 +87,78 @@ const props = defineProps({
       return {
         width: '310px',
         height: '40px',
-      };
+      }
     },
   },
-});
+})
 
-const verifyType = ref('');
-let componentType: Component | null = null;
-const showVerifyBox = ref(false);
-const { proxy } = getCurrentInstance() as ComponentInternalInstance;
+const verifyType = ref('')
+let componentType: Component | null = null
+const showVerifyBox = ref(false)
+const { proxy } = getCurrentInstance() as ComponentInternalInstance
 
 const uuid = () => {
-  const s: number[] = [];
-  const hexDigits = '0123456789abcdef';
+  const s: number[] = []
+  const hexDigits = '0123456789abcdef'
   for (let i = 0; i < 36; i += 1) {
-    s[i] = Math.floor(Math.random() * 0x10);
+    s[i] = Math.floor(Math.random() * 0x10)
   }
-  s[14] = 4; // bits 12-15 of the time_hi_and_version field to 0010
-  s[19] = (s[19] & 0x3) | 0x8; // bits 6-7 of the clock_seq_hi_and_reserved to 01
+  s[14] = 4 // bits 12-15 of the time_hi_and_version field to 0010
+  s[19] = (s[19] & 0x3) | 0x8 // bits 6-7 of the clock_seq_hi_and_reserved to 01
 
   // 转换为十六进制字符串
-  const hex = s.map((n, i) => {
-    if (i === 8 || i === 13 || i === 18 || i === 23) return '-';
-    return hexDigits[n];
-  }).join('');
+  const hex = s
+    .map((n, i) => {
+      if (i === 8 || i === 13 || i === 18 || i === 23) return '-'
+      return hexDigits[n]
+    })
+    .join('')
 
-  const slider = `slider-${hex}`;
-  const point = `point-${hex}`;
+  const slider = `slider-${hex}`
+  const point = `point-${hex}`
   // 判断下是否存在 slider
   if (!localStorage.getItem('slider')) {
-    localStorage.setItem('slider', slider);
+    localStorage.setItem('slider', slider)
   }
   if (!localStorage.getItem('point')) {
-    localStorage.setItem('point', point);
+    localStorage.setItem('point', point)
   }
-};
+}
 
 // 刷新
 const refresh = () => {
-  const instance = proxy?.$refs.instance as { refresh?: () => void } | undefined;
+  const instance = proxy?.$refs.instance as { refresh?: () => void } | undefined
   if (instance?.refresh) {
-    instance.refresh();
+    instance.refresh()
   }
-};
+}
 
 // 关闭
 const close = () => {
-  showVerifyBox.value = false;
-  emit('stopLoading');
-};
+  showVerifyBox.value = false
+  emit('stopLoading')
+}
 
 // 显示
 const show = () => {
-  const instance = proxy?.$refs.instance as { init?: () => void } | undefined;
+  const instance = proxy?.$refs.instance as { init?: () => void } | undefined
   if (instance?.init) {
-    instance.init();
+    instance.init()
   }
   setTimeout(() => {
-    showVerifyBox.value = true;
-  }, 300);
-};
+    showVerifyBox.value = true
+  }, 300)
+}
 
 defineExpose({
   show,
   refresh,
   close,
-});
+})
 
 onMounted(() => {
-  uuid();
-});
+  uuid()
+})
 
 watch(
   () => props.captchaType,
@@ -160,13 +169,13 @@ watch(
       //   componentType.value = 'VerifyPoints';
       //   break;
       default:
-        verifyType.value = '2';
-        componentType = VerifySlide;
-        break;
+        verifyType.value = '2'
+        componentType = VerifySlide
+        break
     }
   },
-  { immediate: true },
-);
+  { immediate: true }
+)
 </script>
 
 <style>
@@ -336,7 +345,7 @@ watch(
 }
 
 .verify-bar-area .verify-left-bar {
-position: absolute;
+  position: absolute;
   top: -1px;
   left: -1px;
   background: #f0fff0;

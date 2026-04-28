@@ -33,7 +33,6 @@ defineOptions({ name: 'SystemDepartment' })
 
   :deep(.arco-table-element colgroup col:last-child) {
     display: none;
-
   }
 }
 </style>

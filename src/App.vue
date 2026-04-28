@@ -20,7 +20,6 @@ defineOptions({ name: 'App' })
 const route = useRoute()
 
 const layoutComponent = computed(() => {
-
   const layout = route.meta.layout as string | undefined
   switch (layout) {
     case 'header':

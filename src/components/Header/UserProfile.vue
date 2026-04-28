@@ -46,7 +46,7 @@ const avatarText = computed(() => {
 
 // 退出登录
 const handleLogout = async (): Promise<void> => {
-  dropdownVisible.value = false;
+  dropdownVisible.value = false
   await userStore.logout()
   router.push('/login')
 }

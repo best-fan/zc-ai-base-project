@@ -9,10 +9,7 @@
     </div>
     <div class="feature-card__footer">
       <button class="feature-card__btn" :style="buttonStyle">
-        进入看板<img
-          src="@/assets/images/index/arrow.png"
-          alt=""
-        >
+        进入看板<img src="@/assets/images/index/arrow.png" alt="">
       </button>
     </div>
   </div>

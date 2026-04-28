@@ -33,7 +33,7 @@ defineOptions({ name: 'HeaderLogo' })
   .line {
     width: 1px;
     height: 10px;
-    background: #C4C9CF;
+    background: #c4c9cf;
     margin: 0 16px;
   }
 

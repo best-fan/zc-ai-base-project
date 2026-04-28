@@ -1,4 +1,4 @@
-import CryptoJS from 'crypto-js';
+import CryptoJS from 'crypto-js'
 
 /**
  * 计算字符串的MD5值
@@ -6,7 +6,7 @@ import CryptoJS from 'crypto-js';
  * @returns 返回计算得到的MD5散列值
  */
 export function md5(content: string): string {
-  return CryptoJS.MD5(content).toString();
+  return CryptoJS.MD5(content).toString()
 }
 
 /**
@@ -16,13 +16,13 @@ export function md5(content: string): string {
  *  */
 export function aesEncrypt(word: string, keyWord: string): string {
   if (!keyWord) {
-    keyWord = 'XwKsGlMcdPMEhR1B';
+    keyWord = 'XwKsGlMcdPMEhR1B'
   }
-  const key = CryptoJS.enc.Utf8.parse(keyWord);
-  const srcs = CryptoJS.enc.Utf8.parse(word);
+  const key = CryptoJS.enc.Utf8.parse(keyWord)
+  const srcs = CryptoJS.enc.Utf8.parse(word)
   const encrypted = CryptoJS.AES.encrypt(srcs, key, {
     mode: CryptoJS.mode.ECB,
     padding: CryptoJS.pad.Pkcs7,
-  });
-  return encrypted.toString();
+  })
+  return encrypted.toString()
 }

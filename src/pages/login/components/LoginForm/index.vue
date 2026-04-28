@@ -24,10 +24,7 @@
         :validate-trigger="['change', 'blur']"
         hide-label
       >
-        <a-input
-          v-model.trim="userInfo.account"
-          :placeholder="form.login.account.placeholder"
-        >
+        <a-input v-model.trim="userInfo.account" :placeholder="form.login.account.placeholder">
           <template #prefix>
             <IconUser />
           </template>

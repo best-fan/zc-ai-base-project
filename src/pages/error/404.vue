@@ -4,9 +4,7 @@
       <div class="error-code">404</div>
       <div class="error-title">页面不存在</div>
       <div class="error-desc">抱歉，您访问的页面不存在或已被移除</div>
-      <a-button type="primary" @click="goHome">
-        返回首页
-      </a-button>
+      <a-button type="primary" @click="goHome"> 返回首页 </a-button>
     </div>
   </div>
 </template>

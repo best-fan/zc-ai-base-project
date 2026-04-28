@@ -29,37 +29,41 @@ const featureCards = ref<IFeatureCard[]>([
     title: '菜单管理',
     description: '系统菜单配置、权限控制',
     themeColor: '#1996E0',
-    gradientBg: 'linear-gradient(180deg, rgba(207, 232, 255, 0.7) 0%, rgba(255, 255, 255, 0.5) 77%)',
+    gradientBg:
+      'linear-gradient(180deg, rgba(207, 232, 255, 0.7) 0%, rgba(255, 255, 255, 0.5) 77%)',
     path: '/system/menu',
-    icon: []
+    icon: [],
   },
   {
     id: 'role',
     title: '角色管理',
     description: '角色配置、权限分配',
     themeColor: '#4073E6',
-    gradientBg: 'linear-gradient(180deg, rgba(216, 228, 255, 0.7) 0%, rgba(255, 255, 255, 0.5) 77%)',
+    gradientBg:
+      'linear-gradient(180deg, rgba(216, 228, 255, 0.7) 0%, rgba(255, 255, 255, 0.5) 77%)',
     path: '/system/role',
-    icon: []
+    icon: [],
   },
   {
     id: 'department',
     title: '部门管理',
     description: '组织架构、部门配置',
     themeColor: '#139EB1',
-    gradientBg: 'linear-gradient(180deg, rgba(190, 241, 248, 0.7) 0%, rgba(255, 255, 255, 0.5) 77%)',
+    gradientBg:
+      'linear-gradient(180deg, rgba(190, 241, 248, 0.7) 0%, rgba(255, 255, 255, 0.5) 77%)',
     path: '/system/department',
-    icon: []
+    icon: [],
   },
   {
     id: 'user',
     title: '用户管理',
     description: '用户账号、权限分配',
     themeColor: '#E64B6F',
-    gradientBg: 'linear-gradient(180deg, rgba(255, 221, 229, 0.7) 0%, rgba(255, 255, 255, 0.5) 77%)',
+    gradientBg:
+      'linear-gradient(180deg, rgba(255, 221, 229, 0.7) 0%, rgba(255, 255, 255, 0.5) 77%)',
     path: '/system/user',
-    icon: []
-  }
+    icon: [],
+  },
 ])
 
 onMounted(() => {

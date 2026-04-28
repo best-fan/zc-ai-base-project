@@ -6,12 +6,12 @@ import ArcoVue from '@arco-design/web-vue'
 import ArcoVueIcon from '@arco-design/web-vue/es/icon'
 import '@arco-design/web-vue/dist/arco.css'
 import zhCN from '@arco-design/web-vue/es/locale/lang/zh-cn'
-import zcuiComp from '@zcui/components';
+import zcuiComp from '@zcui/components'
 
 import App from './App.vue'
 import router from './router'
 // 初始化全局 axios（供 @zcui/system 等第三方库使用）
-import './services/_vendorAxios' 
+import './services/_vendorAxios'
 import './index.scss'
 
 /**

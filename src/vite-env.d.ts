@@ -9,14 +9,14 @@ declare module '*.vue' {
 // @zcui/system 模块类型声明
 declare module '@zcui/system' {
   import type { DefineComponent } from 'vue'
-  
+
   export const SystemUser: DefineComponent
   export const SystemRole: DefineComponent
   export const SystemMenu: DefineComponent
   export const SystemDepartment: DefineComponent
   export const SystemDict: DefineComponent
   export const SystemTenant: DefineComponent
-  
+
   const zcuiSys: unknown
   export default zcuiSys
 }

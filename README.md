@@ -6,10 +6,12 @@
 
 - Vue 3 + TypeScript
 - Vite 5
-- Pinia（状态管理）
-- Vue Router（路由）
+- Pinia + pinia-plugin-persistedstate（状态管理，支持持久化）
+- Vue Router（路由，静态路由 + 后端菜单驱动的动态路由）
 - Arco Design Vue（UI 组件库）
-- @antv/g2（图表）
+- @zcui/components、@zcui/system（业务组件库，系统管理页面）
+- crypto-js（加密：MD5、AES）
+- @antv/g2（图表，已安装，当前暂未使用）
 - SCSS（样式）
 
 ## 开发环境
@@ -63,17 +65,19 @@ src/
 ├── components/    # 公共组件
 ├── composables/   # 组合式函数
 ├── config/        # 项目配置
-├── layouts/       # 布局组件
+├── constants/     # 应用常量
+├── layouts/       # 布局组件（HeaderLayout / EmptyLayout）
 ├── pages/         # 页面
-├── router/        # 路由配置
-├── store/         # Pinia 状态管理
+├── router/        # 路由配置（index/static/dynamic/guard/instance）
+├── store/         # Pinia 状态管理（子目录形式，如 store/user/index.ts）
 ├── styles/        # 全局样式
 ├── types/         # 类型定义
-│   ├── api/       # API 类型
-│   └── enum/      # 枚举类型
+│   ├── api/       # API 请求/响应类型
+│   ├── models/    # 业务模型类型
+│   ├── components.ts   # 组件相关类型
+│   └── composables.ts  # 组合式函数相关类型
 ├── utils/         # 工具函数
 ├── assets/        # 静态资源
-├── constants/     # 常量定义
 ├── App.vue        # 根组件
 └── main.ts        # 入口文件
 ```
@@ -82,16 +86,29 @@ src/
 
 | 目录 | 职责 |
 |------|------|
-| services/ | API 封装，统一从 `@/types` 导入类型 |
+| services/ | API 封装，业务层统一使用 `http` 对象，类型从 `@/types` 导入 |
 | components/ | 公共组件，每个组件单独目录 |
-| composables/ | 全局组合式函数 |
-| layouts/ | 布局组件，根据路由 meta.layout 切换 |
+| composables/ | 全局组合式函数（`use` 前缀） |
+| config/ | 项目配置常量（标题、API 地址、超时等） |
+| constants/ | 应用常量（STORAGE_KEYS、PAGINATION_CONFIG、DATE_FORMAT 等） |
+| layouts/ | 布局组件（HeaderLayout / EmptyLayout），根据路由 meta.layout 切换 |
 | pages/ | 页面，私有组件放 `pages/xxx/components/` |
-| router/ | 路由配置，懒加载 + meta 配置 |
-| store/ | Pinia Setup Store |
+| router/ | 路由配置，多文件拆分：静态路由 + 后端菜单驱动的动态路由 |
+| store/ | Pinia Setup Store（子目录形式），persist 持久化 |
 | styles/ | 全局样式：variables、mixins |
 | types/ | 所有类型集中管理，统一从 `@/types` 导入 |
-| utils/ | 工具函数 |
+| utils/ | 工具函数（storage、crypto、auth） |
+
+## 路由机制
+
+项目采用「静态路由 + 动态路由」组合：
+
+- **静态路由**（`router/static.ts`）：无需权限的基础路由，如登录页 `/login`、首页 `/`。
+- **动态路由**（`router/dynamic.ts`）：登录后根据后端返回的菜单树（`IMenu[]`）动态生成并注册，页面组件按 `pages/{菜单path}/index.vue` 自动匹配。
+- **路由守卫**（`router/guard.ts`）：处理页面标题、登录拦截、动态路由恢复。
+- **路由实例**（`router/instance.ts`）：解决循环依赖，供动态路由注册使用。
+
+> 新增业务页面只需在 `src/pages/` 下按菜单路径创建页面，并在后端菜单配置对应路径，前端无需手动修改路由文件。
 
 ## 环境变量
 

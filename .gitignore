@@ -37,4 +37,8 @@ Thumbs.db
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts
+
+# Claude Code：忽略本地配置，保留团队共享规范
 .claude/*
+!.claude/rules/
+.claude/settings.local.json
